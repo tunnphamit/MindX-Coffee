@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const userSession = JSON.parse(localStorage.getItem('user_session'));
+    const now = new Date().getTime();
+    if (now < userSession?.expiry) {
+        console.log('back...');
+        
+        window.location.href = "../../../index.html";
+        return;
+    }
+    
     const inpEmail = document.querySelector(".inp-email");
     const inpPwd = document.querySelector(".inp-pwd");
     const loginForm = document.querySelector("#login-form");
