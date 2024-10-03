@@ -20,7 +20,7 @@ body {
     padding: 32px 40px;
 }
 .box form {
-    margin-top: 32px;
+    /* margin-top: 32px; */
 }
 .box .form-group {
     background-color: #232a31;

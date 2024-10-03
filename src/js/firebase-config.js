@@ -6,8 +6,8 @@ const firebaseConfig = {
     storageBucket: "coffee-management-system-bae05.appspot.com",
     messagingSenderId: "87891901961",
     appId: "1:87891901961:web:48b5441aff8d22c3c302d8",
-    measurementId: "G-KQXKEG6CC8",
-};
+    measurementId: "G-KQXKEG6CC8"
+  };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
