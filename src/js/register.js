@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     const inpUsername = document.querySelector(".inp-username");
     const inpEmail = document.querySelector(".inp-email");
     const inpPwd = document.querySelector(".inp-pwd");
