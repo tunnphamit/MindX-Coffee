@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const userSession = JSON.parse(localStorage.getItem('user_session'));
 
-    console.log(userSession);
-
     if (userSession) {
         const now = new Date().getTime();
 

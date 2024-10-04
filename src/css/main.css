@@ -24,7 +24,29 @@
     opacity: 0.9;
 }
 
-/*  */
+/* text */
 .text-primary {
     color: var(--color-primary) !important;
+}
+
+/* box shadow */
+.shadow-md {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+
+/* layout */
+.page-wrapper {
+    min-height: 100vh
+}
+.sidebar {
+    background-color: var(--color-black);
+}
+.sidebar .menu {
+    list-style: none;
+}
+.sidebar .menu a {
+    text-decoration: none;
+}
+.sidebar .menu a:hover {
+    background-color: var(--color-grey);
 }

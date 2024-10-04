@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const userSession = JSON.parse(localStorage.getItem('user_session'));
     const now = new Date().getTime();
     if (now < userSession?.expiry) {
-        console.log('back...');
-        
         window.location.href = "../../../index.html";
         return;
     }
@@ -16,47 +14,40 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
         let email = inpEmail.value;
-        let pwd = inpPwd.value;
+        let password = inpPwd.value;
 
         // Kiểm tra các trường có trống không
-        if (!email || !pwd) {
+        if (!email || !password) {
             alert("Vui lòng điền đủ các trường");
             return;
         }
 
-        // Kiểm tra email và mật khẩu
-        db.collection("users").where("email", "==", email).get()
-            .then((querySnapshot) => {
-                if (querySnapshot.empty) {
-                    alert("Email không tồn tại");
-                    return;
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        const user = doc.data();
-                        if (user.password === pwd) {
-                            alert("Đăng nhập thành công");
+        // Đăng nhập với Firebase Auth
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in
+            var user = userCredential.user;
+            alert("Đăng nhập thành công");
                             
-                            // Thiết lập phiên hoặc lưu thông tin đăng nhập
-                            // Tạo đối tượng user session
-                            const userSession = {
-                                user: user,
-                                expiry: new Date().getTime() + 2 * 60 * 60 * 1000 // 2 tiếng
-                            };
+            // Thiết lập phiên hoặc lưu thông tin đăng nhập
+            // Tạo đối tượng user session
+            const userSession = {
+                user: user,
+                expiry: new Date().getTime() + 2 * 60 * 60 * 1000 // 2 tiếng
+            };
 
-                            // Lưu vào localStorage
-                            localStorage.setItem('user_session', JSON.stringify(userSession));
+            // Lưu vào localStorage
+            localStorage.setItem('user_session', JSON.stringify(userSession));
 
-                            // Chuyển hướng tới trang quản lý
-                            window.location.href = "../../../index.html";
-                        } else {
-                            alert("Mật khẩu không đúng");
-                        }
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error("Error checking email: ", error);
-            });
+            // Chuyển hướng tới trang quản lý
+            window.location.href = "../../../index.html";
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert("Mật khẩu không đúng");
+        });
+
     }
 
     loginForm.addEventListener("submit", handleLogin);

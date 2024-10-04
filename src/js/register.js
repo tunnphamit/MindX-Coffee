@@ -6,55 +6,57 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerForm = document.querySelector("#register-form");
 
     function handleRegister(event) {
-        event.preventDefault() // 
+        event.preventDefault() // Ngăn chặn hành vi mặc định của form
 
         let username = inpUsername.value;
         let email = inpEmail.value;
-        let pwd = inpPwd.value;
-        let confirmPwd = inpConfirmPwd.value;
-        let role_id = 2; // Mặc định là quyền của guest
+        let password = inpPwd.value;
+        let confirmPassword = inpConfirmPwd.value;
+        let role_id = 2; // Mặc định là quyền của guest. ( 1: Admin, 2: Guest )
 
         // check fields empty
-        if (!username || !email || !pwd || !confirmPwd) {
+        if (!username || !email || !password || !confirmPassword) {
             alert("Vui lòng điền đủ các trường");
             return;
         }
-        if (pwd != confirmPwd) {
+        if (password != confirmPassword) {
             alert("Mật khẩu không khớp");
             return;
         }
 
-        // Check if email already exists
-        db.collection("users").where("email", "==", email).get()
-            .then((querySnapshot) => {
-                if (!querySnapshot.empty) {
-                    alert("Email đã được đăng ký");
-                    return;
-                } else {
-                    // User data
-                    let userData = {
-                        username,
-                        email,
-                        password: pwd,
-                        role_id: role_id
-                    }
+        // Tạo tài khoản với Firebase Auth
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            // ...
+            // User data
+            let userData = {
+                username,
+                email,
+                password,
+                role_id: role_id
+            }
 
-                    // Thêm user vào Firestore
-                    db.collection("users").add(userData)
-                        .then((docRef) => {
-                            alert("Đăng ký thành công");
-                            window.location.href = "/src/pages/login.html";
-                            console.log("Document written with ID: ", docRef.id);
-                        })
-                        .catch((error) => {
-                            alert("Đăng ký thất bại");
-                            console.error("Error adding document: ", error);
-                        });
-                }
-            })
-            .catch((error) => {
-                console.error("Error checking email: ", error);
-            });
+            // Thêm user vào Firestore
+            db.collection("users").add(userData)
+                .then((docRef) => {
+                    alert("Đăng ký thành công");
+                    window.location.href = "/src/pages/login.html";
+                    console.log("Document written with ID: ", docRef.id);
+                })
+                .catch((error) => {
+                    alert("Đăng ký thất bại");
+                    console.error("Error adding document: ", error);
+                });
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+            alert(`Lỗi: ${errorMessage}`);
+            console.log(errorMessage);
+        });
     }
 
     registerForm.addEventListener("submit", handleRegister);
