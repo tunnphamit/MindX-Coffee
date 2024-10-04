@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((userCredential) => {
             // Signed in 
             var user = userCredential.user;
-            // ...
-            // User data
+            // Thông tin người dùng
             let userData = {
                 username,
                 email,
                 password,
-                role_id: role_id
+                role_id: role_id,
+                balance: 0, // số dư ví mặc định là 0
             }
 
             // Thêm user vào Firestore

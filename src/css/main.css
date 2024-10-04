@@ -23,7 +23,10 @@
     background-color: var(--color-primary);
     opacity: 0.9;
 }
-
+.btn-grey {
+    background-color: #d1d1d1;
+    border: none;
+}
 /* text */
 .text-primary {
     color: var(--color-primary) !important;
@@ -49,4 +52,12 @@
 }
 .sidebar .menu a:hover {
     background-color: var(--color-grey);
+}
+
+/*  */
+.product-table .product-item img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
 }
