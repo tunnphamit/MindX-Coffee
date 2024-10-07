@@ -99,3 +99,10 @@ footer .footer-form input{
 .order-form .btn-cancle .icon{
     /* font-size: 25px; */
 }
+
+/*  */
+.order-list .order-item img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

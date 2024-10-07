@@ -1,13 +1,15 @@
 // Hiển thị danh sách sản phẩm
 const productList = document.querySelector('.product-list');
-let htmls = '';
-db.collection('products').get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const product = doc.data();
-            const productId = doc.id;
-            const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price);
-            htmls += `
+
+function getProductList() {
+    let htmls = '';
+    db.collection('products').get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const product = doc.data();
+                const productId = doc.id;
+                const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price);
+                htmls += `
                     <div class="product-item col-md-3 col-6">
                         <div class="content">
                             <img src="${product.imageUrl}" alt="${product.name}">
@@ -21,22 +23,25 @@ db.collection('products').get()
                         </div>
                     </div>
                 `;
-        });
-        productList.innerHTML = htmls;
-
-        let btnOrder = document.querySelectorAll('.btn-order');
-        btnOrder.forEach(btn => {
-            btn.addEventListener('click', function () {
-                const productId = this.getAttribute('data-id');
-                checkSession();
-                showOrderForm(productId);
             });
-        });
+            productList.innerHTML = htmls;
 
-    })
-    .catch((error) => {
-        console.error("Error fetching products: ", error);
-    });
+            let btnOrder = document.querySelectorAll('.btn-order');
+            btnOrder.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-id');
+                    checkSession();
+                    showOrderForm(productId);
+                });
+            });
+
+        })
+        .catch((error) => {
+            console.error("Error fetching products: ", error);
+        });
+}
+
+getProductList();
 
 function showOrderForm(productId) {
     let orderForm = document.querySelector(".order-form");
@@ -107,7 +112,7 @@ function handleOrder(productId, quantity, productPrice) {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                let author = { id: doc.id, ...doc.data() };
+                let author = { ...doc.data() };
                 const totalCost = productPrice * quantity; // Tính tổng chi phí
 
                 // Kiểm tra số dư
@@ -116,29 +121,47 @@ function handleOrder(productId, quantity, productPrice) {
                     return;
                 }
 
-                const orderData = {
-                    userId: author.id,
-                    productId: productId,
-                    quantity: quantity,
-                    status: 0,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
+                db.collection("products").doc(productId)
+                    .get()
+                    .then((doc) => {
+                        const orderData = {
+                            author: authorEmail, // Người đang order
+                            product: doc.data(),
+                            quantity: quantity,
+                            status: 0,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        };
 
-                // Lưu đơn hàng
-                db.collection('orders').add(orderData)
-                    .then(() => {
-                        // Cập nhật số dư ví của người dùng
-                        return db.collection('users').doc(author.id).update({
-                            balance: author.balance - totalCost // Giảm số dư ví
-                        });
-                    })
-                    .then(() => {
-                        alert("Đặt hàng thành công!");
-                        document.querySelector(".order-form").style.display = 'none';
+                        // Lưu đơn hàng
+                        db.collection('orders').add(orderData)
+                            .then(() => {
+                                // Tìm kiếm người dùng theo email
+                                return db.collection('users').where("email", "==", authorEmail).get();
+                            })
+                            .then((querySnapshot) => {
+                                // Kiểm tra xem người dùng có tồn tại không
+                                if (!querySnapshot.empty) {
+                                    // Cập nhật số dư ví của người dùng
+                                    const userDoc = querySnapshot.docs[0];
+                                    return userDoc.ref.update({
+                                        balance: userDoc.data().balance - totalCost // Trừ số dư ví
+                                    });
+                                } else {
+                                    throw new Error("Không tìm thấy người dùng.");
+                                }
+                            })
+                            .then(() => {
+                                alert("Đặt hàng thành công!");
+                                document.querySelector(".order-form").style.display = 'none';
+                            })
+                            .catch((error) => {
+                                console.error("Error placing order or updating balance: ", error);
+                            });
                     })
                     .catch((error) => {
-                        console.error("Error placing order or updating balance: ", error);
+                        console.log("Error getting documents: ", error);
                     });
+
             });
 
         })
