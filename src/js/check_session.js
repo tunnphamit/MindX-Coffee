@@ -1,7 +1,4 @@
 function checkSession() {
-    const userSession = JSON.parse(localStorage.getItem('user_session'));
-    console.log('checking session');
-
     if (userSession) {
         const now = new Date().getTime();
 
@@ -16,5 +13,4 @@ function checkSession() {
         // Không có phiên, chuyển hướng về trang đăng nhập
         window.location.href = "/src/pages/login.html";
     }
-
 }

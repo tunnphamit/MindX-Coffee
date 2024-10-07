@@ -2,6 +2,7 @@
     /* --color-primary: #CD5C08; */
     --color-primary: #982B1C;
     --color-danger: #B8001F;
+    --color-primary-blur: rgba(184, 0, 31, .8);
     --color-black: #000;
     --color-white: #fff;
     --color-input-dark: #0B192C;
@@ -33,6 +34,10 @@
 .btn-danger {
     background-color: var(--color-danger) !important;
     color: var(--color-white);
+}
+.btn-cancle {
+    margin: 8px 0px;
+    border: 1px solid var(--color-grey);
 }
 /* text */
 .text-primary {

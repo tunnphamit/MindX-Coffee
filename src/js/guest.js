@@ -1,8 +1,4 @@
 const profileDropdown = document.querySelector('#author-menu-drd');
-const userSession = JSON.parse(localStorage.getItem('user_session'));
-
-console.log(profileDropdown);
-
 if (userSession) {
     const now = new Date().getTime();
     if (now < userSession.expiry) {

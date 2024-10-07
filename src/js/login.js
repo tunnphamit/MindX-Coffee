@@ -1,3 +1,4 @@
+
 const inpEmail = document.querySelector(".inp-email");
 const inpPwd = document.querySelector(".inp-pwd");
 const loginForm = document.querySelector("#login-form");
@@ -5,12 +6,12 @@ const loginForm = document.querySelector("#login-form");
 function handleLogin(event) {
     event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
-    const userSession = JSON.parse(localStorage.getItem('user_session'));
     const now = new Date().getTime();
     if (now < userSession?.expiry) {
         window.location.href = "../../../index.html";
         return;
     }
+
 
     let email = inpEmail.value;
     let password = inpPwd.value;

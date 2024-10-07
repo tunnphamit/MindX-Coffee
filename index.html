@@ -20,6 +20,8 @@
 </head>
 <body>
 
+    <div class="order-form"></div>
+
     <div class="page-wrapper">
         <div class="banner-group">
             <header class="py-4">
@@ -62,16 +64,15 @@
 
         <section class="container mt-4">
             <div class="row align-items-center">
-                <div class="col-md-6 col-12">
+                <div class="col-lg-6 col-12 text-center">
                     <iframe class="rounded-md" width="560" height="315" src="https://www.youtube.com/embed/VJy4L5iAQNU?si=KWcVclns2UQjgKAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
-                <div class="col-md-6 col-12 text-center">
+                <div class="col-lg-6 col-12 text-center">
                     <h2>Have a ship - Uống gì không?</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp or incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
                 </div>
             </div>
         </section>
-
         <section class="container">
             <h3 class="my-4">Hôm nay có gì?</h3>
             <div class="product-list row py-4"></div>
@@ -112,6 +113,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.1/firebase-auth-compat.min.js" integrity="sha512-b2PGOE6ClpdFR5WZylPqJ9NEtHyGtdXKIe5wI0qRKVg3VeH9Km8CvihpnySwf6v21TV2cMTUp/BuglUiFLB38Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Functions -->
+    <script>
+        let userSession = JSON.parse(localStorage.getItem('user_session'));
+    </script>
     <script src="./src/js/firebase-config.js"></script>
     <script src="./src/js/guest.js"></script>
     <script src="./src/js/index.js"></script>
