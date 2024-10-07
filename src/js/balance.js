@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Nạp tiền vào ví
     balanceForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-        let authorEmail = userSession.user.providerData[0].email;
+        let authorEmail = userSession.user.email;
         let amount = parseFloat(inpAmount.value); // Chuyển amount thành số thực
 
         db.collection("users").where("email", "==", authorEmail)

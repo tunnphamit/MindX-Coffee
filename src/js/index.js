@@ -65,7 +65,7 @@ function showOrderForm(productId) {
                                             <label for="quantity">Số lượng</label>
                                             <input type="number" id="quantity" value="1" min="1">
                                         </div>
-                                        <button type="submit" class="btn btn-primary mt-4">Đặt hàng</button>
+                                        <button type="submit" class="btn btn-primary mt-4 btn-confirm-order" data-price=${product.price}>Xác nhận</button>
                                     </form>
                                 </div>
                             </div>
@@ -80,11 +80,12 @@ function showOrderForm(productId) {
                 });
 
                 // Thêm sự kiện cho form đặt hàng
-                const orderFormElement = document.querySelector("#order-form");
-                orderFormElement.addEventListener('submit', function (e) {
+                const btnConfirmOrder = document.querySelector(".btn-confirm-order");
+                btnConfirmOrder.addEventListener('click', function (e) {
                     e.preventDefault();
                     const quantity = document.getElementById('quantity').value;
-                    handleOrder(productId, quantity);
+                    const productPrice = this.getAttribute('data-price');
+                    handleOrder(productId, quantity, productPrice);
                 });
 
             } else {
@@ -97,27 +98,52 @@ function showOrderForm(productId) {
 
 }
 
-function handleOrder(productId, quantity) {
+function handleOrder(productId, quantity, productPrice) {
     if (!userSession) {
         return;
     }
-    const userId = userSession.user.uid;
-    const orderData = {
-        productId: productId,
-        quantity: quantity,
-        userId: userId,
-        status: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+    let authorEmail = userSession.user.email;
+    db.collection("users").where("email", "==", authorEmail)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let author = { id: doc.id, ...doc.data() };
+                const totalCost = productPrice * quantity; // Tính tổng chi phí
 
-    db.collection('orders').add(orderData)
-        .then(() => {
-            alert("Đặt hàng thành công");
-            document.querySelector(".order-form").style.display = 'none';
+                // Kiểm tra số dư
+                if (author.balance < totalCost) {
+                    alert("Số dư ví không đủ!");
+                    return;
+                }
+
+                const orderData = {
+                    userId: author.id,
+                    productId: productId,
+                    quantity: quantity,
+                    status: 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                // Lưu đơn hàng
+                db.collection('orders').add(orderData)
+                    .then(() => {
+                        // Cập nhật số dư ví của người dùng
+                        return db.collection('users').doc(author.id).update({
+                            balance: author.balance - totalCost // Giảm số dư ví
+                        });
+                    })
+                    .then(() => {
+                        alert("Đặt hàng thành công!");
+                        document.querySelector(".order-form").style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error("Error placing order or updating balance: ", error);
+                    });
+            });
+
         })
         .catch((error) => {
-            console.error("Error placing order: ", error);
+            console.log("Error getting documents: ", error);
         });
 }
-
 
