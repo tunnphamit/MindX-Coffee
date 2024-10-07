@@ -42,49 +42,25 @@
         </div>
 
         <div class="content col-md-10">
-            <div class="row p-4">
-                <div class="col-md-4 shadow-md p-4">
-                    <h5>Thêm sản phẩm</h5>
-                    <form action="" id="product-form">
-                        <div class="form-group mt-2">
-                            <label for="name">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="product_name" name="product_name">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="name">Giá bán</label>
-                            <input type="number" class="form-control" id="product_price" name="product_price">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="name">Ảnh</label>
-                            <input type="file" class="form-control" id="product_image" name="product_image">
-                        </div>
-                        <div class="form-group mt-2">
-                            <button type="submit" class="btn btn-primary px-4 py-2">Lưu</button>
-                            <button type="reset" class="btn btn-grey p-2">Đặt lại</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-8">
-                    <div class="product-table p-4 shadow-md">
-                        <h5>Danh sách sản phẩm</h5>
-                        <table class="table">
-                            <thead>
-                              <tr class="text-center">
-                                <th scope="col">#</th>
-                                <th scope="col">Ảnh sản phẩm</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Giá</th>
-                                <th scope="col">Hành động</th>
-                              </tr>
-                            </thead>
-                            <tbody id="product-list">
-                              <tr>
-                                <!-- Hiển thị danh sách sản phẩm -->
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
-                </div>
+                
+            <div class="product-table p-4 shadow-md">
+                <h5>Danh sách đơn hàng</h5>
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Khách hàng</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-list-admin">
+                        <tr>
+                        <!-- Hiển thị danh sách sản phẩm -->
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -138,6 +114,7 @@
         });
 
     </script>
-    <script src="./src/js/admin.js"></script>
+
+    <script src="./src/js/admin_order.js"></script>
 </body>
 </html>
