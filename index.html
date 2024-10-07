@@ -53,12 +53,50 @@
                 </div>
             </header>
 
+            <div class="banner-text">
+                <h2 class="title text-white">Bắt đầu ngày với một tách <br> đen đá không đường...</h2>
+                <button class="btn-primary px-4 py-2 rounded-sm mt-4">Mua ngay</button>
+            </div>
+
         </div>
 
-        <div class="container">
-            <h3 class="my-2">Sản phẩm</h3>
+        <section class="container mt-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-12">
+                    <iframe class="rounded-md" width="560" height="315" src="https://www.youtube.com/embed/VJy4L5iAQNU?si=KWcVclns2UQjgKAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="col-md-6 col-12 text-center">
+                    <h2>Have a ship - Uống gì không?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp or incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h3 class="my-4">Hôm nay có gì?</h3>
             <div class="product-list row py-4"></div>
-        </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row h-100 content">
+                    <div class="col-md-4 item">
+                        <h5>About Us</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                    </div>
+                    <div class="col-md-4 item">
+                        <h5>Newsletter</h5>
+                        <div class="d-flex footer-form">
+                            <input type="text" placeholder="Enter email">
+                            <button class="btn btn-primary py-2 px-4">Gửi</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 item">
+                        <h5>Follow Us</h5>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
 
@@ -88,7 +126,7 @@
                     const product = doc.data();
                     const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price);
                     htmls += `
-                        <div class="product-item col-md-4 col-6">
+                        <div class="product-item col-md-3 col-6">
                             <div class="content">
                                 <img src="${product.imageUrl}" alt="${product.name}">
                                 <div class="text p-2">
