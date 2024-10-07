@@ -1,34 +1,33 @@
-document.addEventListener('DOMContentLoaded', function () {
+const inpEmail = document.querySelector(".inp-email");
+const inpPwd = document.querySelector(".inp-pwd");
+const loginForm = document.querySelector("#login-form");
+
+function handleLogin(event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+
     const userSession = JSON.parse(localStorage.getItem('user_session'));
     const now = new Date().getTime();
     if (now < userSession?.expiry) {
         window.location.href = "../../../index.html";
         return;
     }
-    
-    const inpEmail = document.querySelector(".inp-email");
-    const inpPwd = document.querySelector(".inp-pwd");
-    const loginForm = document.querySelector("#login-form");
 
-    function handleLogin(event) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+    let email = inpEmail.value;
+    let password = inpPwd.value;
 
-        let email = inpEmail.value;
-        let password = inpPwd.value;
+    // Kiểm tra các trường có trống không
+    if (!email || !password) {
+        alert("Vui lòng điền đủ các trường");
+        return;
+    }
 
-        // Kiểm tra các trường có trống không
-        if (!email || !password) {
-            alert("Vui lòng điền đủ các trường");
-            return;
-        }
-
-        // Đăng nhập với Firebase Auth
-        firebase.auth().signInWithEmailAndPassword(email, password)
+    // Đăng nhập với Firebase Auth
+    firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in
             var user = userCredential.user;
             alert("Đăng nhập thành công");
-                            
+
             // Thiết lập phiên hoặc lưu thông tin đăng nhập
             // Tạo đối tượng user session
             const userSession = {
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Mật khẩu không đúng");
         });
 
-    }
+}
 
-    loginForm.addEventListener("submit", handleLogin);
-});
+loginForm.addEventListener("submit", handleLogin);
