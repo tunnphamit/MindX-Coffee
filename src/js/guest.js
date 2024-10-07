@@ -1,47 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const profileDropdown = document.querySelector('.dropdown-menu');
-    const balanceForm = document.querySelector('#balance-form');
-    const inpAmount = document.querySelector('#amount');
+    const profileDropdown = document.querySelector('#author-menu-drd');
     const userSession = JSON.parse(localStorage.getItem('user_session'));
 
+    console.log(profileDropdown);
+    
     if (userSession) {
-        profileDropdown.innerHTML = `
-            <li><a class="dropdown-item" href="./order.html">Đơn hàng</a></li>
-            <li><a class="dropdown-item" href="./balance.html">Ví</a></li>
-        `;
-    }
+        const now = new Date().getTime();
+        if (now < userSession.expiry) {
+            profileDropdown.innerHTML = `
+                <li class="bg-grey-light"><span class="dropdown-item">${userSession.user.providerData[0].email}</span></li>
+                <li><a class="dropdown-item" href="./order.html">Đơn hàng</a></li>
+                <li><a class="dropdown-item" href="./balance.html">Ví</a></li>
+                <li><button id="logout-btn" class="btn text-danger">Đăng xuất</button</li>
+            `;
 
-    function handleOrder() {
-        // Implement order handling logic here
-    }
-
-    // Nạp tiền vào ví
-    balanceForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-        let authorEmail = userSession.user.providerData[0].email;
-        let amount = parseFloat(inpAmount.value); // Chuyển giá trị thành số thực
-
-        db.collection("users").where("email", "==", authorEmail)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    let userDoc = doc.data();
-                    let newBalance = (userDoc.balance || 0) + amount; // Tính toán số dư mới
-                    db.collection("users").doc(doc.id).update({
-                        balance: newBalance
-                    })
-                    .then(() => {
-                        console.log("Balance updated successfully");
-                        alert("Nạp thành công");
-                    })
-                    .catch((error) => {
-                        console.error("Error updating balance: ", error);
-                        alert("Có lỗi xảy ra khi nạp");
-                    });
-                });
-            })
-            .catch((error) => {
-                console.error("Error getting documents: ", error);
+            // Xử lý đang xuất
+            document.getElementById('logout-btn').addEventListener('click', function () {
+                if(confirm("Bạn có chắc chắn muốn đăng xuất")) {
+                    // Xóa thông tin phiên người dùng khỏi localStorage
+                    localStorage.removeItem('user_session');
+    
+                    // Chuyển hướng tới trang đăng nhập
+                    window.location.href = "../../../index.html";
+                }
             });
-    });
+        }
+    }
 });

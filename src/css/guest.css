@@ -24,6 +24,10 @@ header .profile button {
     border: none;
     color: var(--color-white);
 }
+.dropdown-menu {
+    padding: 0px;
+    border-radius: 8px;
+}
 .page-content {
     margin-top: 100px;
 }

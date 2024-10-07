@@ -1,9 +1,11 @@
 :root {
     --color-primary: #CD5C08;
+    --color-danger: #B8001F;
     --color-black: #000;
     --color-white: #fff;
     --color-input-dark: #0B192C;
     --color-grey: #5c5c5e;
+    --color-grey-light: #dcdcdc;
 }
 
 /* rounded */
@@ -27,9 +29,21 @@
     background-color: #d1d1d1;
     border: none;
 }
+.btn-danger {
+    background-color: var(--color-danger) !important;
+    color: var(--color-white);
+}
 /* text */
 .text-primary {
     color: var(--color-primary) !important;
+}
+.text-danger {
+    color: var(--color-danger);
+}
+
+/* background */
+.bg-grey-light {
+    background-color: var(--color-grey-light)
 }
 
 /* box shadow */
