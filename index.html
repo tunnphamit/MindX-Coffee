@@ -34,7 +34,7 @@
                             <a href="/" class="nav-link">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Menu</a>
+                            <a href="/menu.html" class="nav-link">Menu</a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link ">
@@ -74,7 +74,7 @@
             </div>
         </section>
         <section class="container">
-            <h3 class="my-4">Hôm nay có gì?</h3>
+            <h3 class="my-4">Có gì mới nhất?</h3>
             <div class="product-list row py-4"></div>
         </section>
 
@@ -107,8 +107,12 @@
                             </ul>
                         </div>
                         <div class="social-media">
-                            <i class="fa-brands fa-facebook-f p-2 me-2 bg-primary rounded-sm"></i>
-                            <i class="fa-brands fa-instagram p-2 me-2 bg-primary rounded-sm"></i>
+                            <a href="https://www.facebook.com/mindxschool" class="me-2 text-white">
+                                <i class="fa-brands fa-facebook-f p-2 bg-primary rounded-sm"></i>
+                            </a>
+                            <a href="https://www.facebook.com/mindxschool" class="me-2 text-white">
+                                <i class="fa-brands fa-instagram p-2 me-2 bg-primary rounded-sm"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +138,12 @@
     </script>
     <script src="./src/js/firebase-config.js"></script>
     <script src="./src/js/guest.js"></script>
-    <script src="./src/js/index.js"></script>
+    <script src="./src/js/get-product.js"></script>
+    <script>
+        const productList = document.querySelector('.product-list');
+        // Gọi hàm getProductList
+        getProductList(productList, 4)
+    </script>
     <script src="./src/js/check_session.js"></script>
 </body>
 </html>
