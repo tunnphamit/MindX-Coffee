@@ -84,10 +84,10 @@
     <script src="./src/js/firebase-config.js"></script>
     <script src="./src/js/check_session.js"></script>
     <script>
-        // Gọi hàm check role
+        // Gọi hàm kiểm tra đã đăng nhập chưa
         checkSession();
 
-        // Kiểm tra quyền
+        // Kiểm tra quyền của user
         document.addEventListener('DOMContentLoaded', function () {
             const userSession = JSON.parse(localStorage.getItem('user_session'));
 

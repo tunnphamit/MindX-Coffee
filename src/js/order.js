@@ -1,5 +1,7 @@
 const orderList = document.querySelector('.order-list');
-console.log(userSession);
+
+// Gọi hàm check role
+checkSession();
 
 function getOrderList() {
     let authorEmail = userSession?.user.email;

@@ -16,7 +16,7 @@ if (userSession) {
                 localStorage.removeItem('user_session');
 
                 // Chuyển hướng tới trang đăng nhập
-                window.location.href = "../../../index.html";
+                window.location.href = "/index.html";
             }
         });
     }
