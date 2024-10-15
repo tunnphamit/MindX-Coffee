@@ -9,7 +9,6 @@
     --color-grey: #5c5c5e;
     --color-grey-light: #dcdcdc;
 }
-
 /* rounded */
 .rounded-sm {
     border-radius: 4px;
@@ -48,6 +47,9 @@
 }
 
 /* background */
+.bg-primary {
+    background-color: var(--color-primary) !important;
+}
 .bg-grey-light {
     background-color: var(--color-grey-light)
 }
@@ -59,7 +61,11 @@
 
 /* layout */
 .page-wrapper {
-    min-height: 100vh
+    min-height: 100vh;
+}
+.page-content {
+    min-height: 300px;
+    margin-top: 95px;
 }
 .sidebar {
     background-color: var(--color-black);
