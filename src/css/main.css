@@ -9,6 +9,11 @@
     --color-grey: #5c5c5e;
     --color-grey-light: #dcdcdc;
 }
+
+.logo img {
+    max-width: 200px;
+}
+
 /* rounded */
 .rounded-sm {
     border-radius: 4px;

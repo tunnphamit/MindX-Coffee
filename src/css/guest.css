@@ -24,6 +24,9 @@ header .profile button {
     border: none;
     color: var(--color-white);
 }
+header .logo img {
+    max-width: 200px;
+}
 .banner-text {
     padding: 120px;
 }
