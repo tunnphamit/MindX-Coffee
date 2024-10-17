@@ -45,6 +45,9 @@
 .text-danger {
     color: var(--color-danger);
 }
+.text-black {
+    color: var(--color-black);
+}
 
 /* background */
 .bg-primary {
